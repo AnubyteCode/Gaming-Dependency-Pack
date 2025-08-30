@@ -1,0 +1,4 @@
+Run the batch. Play. 
+
+Consider seeking complementary scripts to remove common first-run install tasks from Steam etc to prevent overwrites by old deps.
+If for some reason the offline DX installer fails, edit the batch swapping the REMs around for the online installer...or just run the web setup straight.

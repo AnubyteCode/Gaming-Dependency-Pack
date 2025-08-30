@@ -8,3 +8,7 @@ Also opts out of .Net telemetry using the documented envar.
 
 Created because I wanted games and apps to work right after reinstalling.
 Open an issue if you have a request for other deps like XAML 2.X etc.
+
+
+Versions are numbered as such:
+v(YY).(MM).(revision)
