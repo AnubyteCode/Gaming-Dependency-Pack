@@ -1,7 +1,7 @@
 @echo off
 CD /d %~dp0
 color 0E
-title Gamer's Dependency Pack v25.9.0
+title Gaming Dependency Pack v25.9.0
 :: Brought to you by AnubyteCode
 
 :: Redistributables are redistributable so here's a megapack.
@@ -146,9 +146,9 @@ exit
 :banner
 timeout /t 2 /nobreak > nul
 cls
-echo ===========================
-echo The Gamer's Dependency Pack
-echo ===========================
+echo ==========================
+echo The Gaming Dependency Pack
+echo ==========================
 echo.
 echo.
 goto:eof
