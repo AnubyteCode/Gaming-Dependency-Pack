@@ -82,11 +82,11 @@ start /wait vcredist2015_2017_2019_2022_x86.exe /passive /norestart
 
 call :banner
 echo .Net 8...
-start /wait windowsdesktop-runtime-8.0.19-win-x86.exe /passive /norestart
+start /wait windowsdesktop-runtime-8.0.20-win-x86.exe /passive /norestart
 
 call :banner
 echo .Net 9...
-start /wait windowsdesktop-runtime-9.0.8-win-x86.exe /passive /norestart
+start /wait windowsdesktop-runtime-9.0.9-win-x86.exe /passive /norestart
 
 goto :exitx
 
@@ -124,13 +124,13 @@ start /wait vcredist2015_2017_2019_2022_x64.exe /passive /norestart
 
 call :banner
 echo .Net 8...
-start /wait windowsdesktop-runtime-8.0.19-win-x86.exe /passive /norestart
-start /wait windowsdesktop-runtime-8.0.19-win-x64.exe /passive /norestart
+start /wait windowsdesktop-runtime-8.0.20-win-x86.exe /passive /norestart
+start /wait windowsdesktop-runtime-8.0.20-win-x64.exe /passive /norestart
 
 call :banner
 echo .Net 9...
-start /wait windowsdesktop-runtime-9.0.8-win-x86.exe /passive /norestart
-start /wait windowsdesktop-runtime-9.0.8-win-x64.exe /passive /norestart
+start /wait windowsdesktop-runtime-9.0.9-win-x86.exe /passive /norestart
+start /wait windowsdesktop-runtime-9.0.9-win-x64.exe /passive /norestart
 
 
 :exitx
