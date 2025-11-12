@@ -44,7 +44,7 @@ call :banner
 REM echo Old DX Files (online)...
 REM start /wait dxwebsetup.exe /Q
 echo Old DX Files...
-start /wait directx_Jun2010_redist.exe /Q
+start /wait directx_Jun2010_redist.exe /Q /T:%TEMP%
 
 :: Set the dotnet telemetry environment variable
 setx DOTNET_CLI_TELEMETRY_OPTOUT 1 /M
@@ -58,35 +58,35 @@ if "%IS_X64%" == "1" goto :X64x
 :X86x
 call :banner
 echo VC 2005...
-start /wait vcredist2005_x86.exe /q
+start /wait vcredist2005_x86.exe /Q /T:%TEMP%
 
 call :banner
 echo VC 2008...
-start /wait vcredist2008_x86.exe /qb
+start /wait vcredist2008_x86.exe /Q /T:%TEMP%
 
 call :banner
 echo VC 2010...
-start /wait vcredist2010_x86.exe /passive /norestart
+start /wait vcredist2010_x86.exe /quiet /norestart
 
 call :banner
 echo VC 2012...
-start /wait vcredist2012_x86.exe /passive /norestart
+start /wait vcredist2012_x86.exe /quiet /norestart
 
 call :banner
 echo VC 2013...
-start /wait vcredist2013_x86.exe /passive /norestart
+start /wait vcredist2013_x86.exe /quiet /norestart
 
 call :banner
 echo VC 2015 - 2022...
-start /wait vcredist2015_2017_2019_2022_x86.exe /passive /norestart
+start /wait vcredist2015_2017_2019_2022_x86.exe /quiet /norestart
 
 call :banner
 echo .Net 8...
-start /wait windowsdesktop-runtime-8.0.20-win-x86.exe /passive /norestart
+start /wait windowsdesktop-runtime-8.0.20-win-x86.exe /quiet /norestart
 
 call :banner
 echo .Net 9...
-start /wait windowsdesktop-runtime-9.0.9-win-x86.exe /passive /norestart
+start /wait windowsdesktop-runtime-9.0.9-win-x86.exe /quiet /norestart
 
 goto :exitx
 
@@ -94,49 +94,50 @@ goto :exitx
 :X64x
 call :banner
 echo VC 2005...
-start /wait vcredist2005_x86.exe /q
-start /wait vcredist2005_x64.exe /q
+start /wait vcredist2005_x86.exe /q /T:%TEMP%
+start /wait vcredist2005_x64.exe /q /T:%TEMP%
 
 call :banner
 echo VC 2008...
-start /wait vcredist2008_x86.exe /qb
-start /wait vcredist2008_x64.exe /qb
+start /wait vcredist2008_x86.exe /q /T:%TEMP%
+start /wait vcredist2008_x64.exe /q /T:%TEMP%
 
 call :banner
 echo VC 2010...
-start /wait vcredist2010_x86.exe /passive /norestart
-start /wait vcredist2010_x64.exe /passive /norestart
+start /wait vcredist2010_x86.exe /quiet /norestart
+start /wait vcredist2010_x64.exe /quiet /norestart
 
 call :banner
 echo VC 2012...
-start /wait vcredist2012_x86.exe /passive /norestart
-start /wait vcredist2012_x64.exe /passive /norestart
+start /wait vcredist2012_x86.exe /quiet /norestart
+start /wait vcredist2012_x64.exe /quiet /norestart
 
 call :banner
 echo VC 2013...
-start /wait vcredist2013_x86.exe /passive /norestart
-start /wait vcredist2013_x64.exe /passive /norestart
+start /wait vcredist2013_x86.exe /quiet /norestart
+start /wait vcredist2013_x64.exe /quiet /norestart
 
 call :banner
 echo VC 2015 - 2022...
-start /wait vcredist2015_2017_2019_2022_x86.exe /passive /norestart
-start /wait vcredist2015_2017_2019_2022_x64.exe /passive /norestart
+start /wait vcredist2015_2017_2019_2022_x86.exe /quiet /norestart
+start /wait vcredist2015_2017_2019_2022_x64.exe /quiet /norestart
 
 call :banner
 echo .Net 8...
-start /wait windowsdesktop-runtime-8.0.20-win-x86.exe /passive /norestart
-start /wait windowsdesktop-runtime-8.0.20-win-x64.exe /passive /norestart
+start /wait windowsdesktop-runtime-8.0.22-win-x86.exe /quiet /norestart
+start /wait windowsdesktop-runtime-8.0.22-win-x64.exe /quiet /norestart
 
 call :banner
 echo .Net 9...
-start /wait windowsdesktop-runtime-9.0.9-win-x86.exe /passive /norestart
-start /wait windowsdesktop-runtime-9.0.9-win-x64.exe /passive /norestart
+start /wait windowsdesktop-runtime-9.0.11-win-x86.exe /quiet /norestart
+start /wait windowsdesktop-runtime-9.0.11-win-x64.exe /quiet /norestart
 
 
 :exitx
 call :banner
 echo.
 echo Installation completed...
+echo Restart recommended...
 echo.
 echo.
 timeout /t 5
