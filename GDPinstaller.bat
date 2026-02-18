@@ -11,36 +11,34 @@ title Gaming Dependency Pack v26.2.1
 
 
 
+::::::::::::  
+:isit  
+:ADMIN  
+::::::::::::  
+:: DOS5+/Win9x/ME → NT/XP → Vista+ → ElevateAB  
+:: If %OS% not defined → DOS/9x/3.x  
+if not "%OS%"=="Windows_NT" goto it  
+:: Check if user is already admin  
+net session >nul 1>nul
+if not errorlevel 1 goto :it  
+:: Check if fltmc exists (Vista+)  
+fltmc >nul 1>nul
+if errorlevel 9009 goto fail  
+:: Check if PowerShell exists  
+powershell -? >nul 1>nul
+if errorlevel 9009 goto fail  
+:: Try elevation via PowerShell  
+powershell -NoProfile -Command "Start-Process '%~f0' -Verb RunAs"  
+exit  
+:fail  
+echo  This script requires Administrator privileges.  
+echo    Please elevate or log in as an Administrator.  
+exit /b 1  
+::::::::::::  
+:it  
+:hasadmin  
 ::::::::::::
-:: ADMIN? ::
-::::::::::::
-reg query "HKU\S-1-5-19\Environment"   1>nul 2>nul
-if errorlevel 1 (    
-    :: 1. Try PowerShell (Modern Windows)
-    powershell -NoProfile -Command "Start-Process '%~f0' -Verb RunAs"  1>nul 2>nul
-    if errorlevel 1 (       
-        :: 2. Try VBScript (Legacy Windows)
-        echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
-        echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"
-        wscript.exe "%temp%\getadmin.vbs"  1>nul 2>nul
-        :: 3. If both fail... (-_-)
-        if errorlevel 1 (
-            echo.
-            echo   Needs admin and can't elevate automatically!
-            echo.
-            if exist "%temp%\getadmin.vbs" del "%temp%\getadmin.vbs"  1>nul 2>nul
-            pause
-            exit /b 1
-        )
-        if exist "%temp%\getadmin.vbs" del "%temp%\getadmin.vbs"  1>nul 2>nul
-    )
-    exit /b
-)
-goto :it
-::::::::::::
-:it
-:hasadmin
-::::::::::::
+
 
 
 ::---Init-----------------------------------------::
@@ -52,20 +50,20 @@ set "IS_X64=0" && if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (set IS_X64=1) else (if
 set "choice="
 call :banner
 echo - Ready to deploy:
-echo    DirectPlay, Dx2010, OpenAL
-echo    VCv14, VC2005-2022, EnvVars
+echo    DirectPlay, Dx2010, OpenAL, VCv14
+echo    VC2005-2022, .net8/9/10, EnvVars
 echo.
 echo -- This may take some time, need reboot.
 choice /T 10 /c:cre /D c /N /M "-- [C]ontinue? With [R]estart? [E]xit now? >"
 set "choice=%errorlevel%"
 if "%choice%"=="3" goto :exitx
 
-
 ::---Telemetry------------------------------------::
 
 ::-------------------------------
 :: Anti-Telemetry Environment Vars
 ::-------------------------------
+title Setting Variables...
 call :banner
 echo  Setting Variables...
 
@@ -86,6 +84,7 @@ setx AZURE_CORE_COLLECT_TELEMETRY 0 /M  1>nul 2>nul
 setx VSCODE_TELEMETRY_DISABLE 1 /M  1>nul 2>nul
 setx VSCODE_CRASH_REPORTER_DISABLE 1 /M  1>nul 2>nul
 setx GH_NO_TELEMETRY 1 /M  1>nul 2>nul
+setx MLDOTNET_CLI_TELEMETRY_OPTOUT 1 /M  1>nul 2>nul
 
 :: --- Web / JS Tools ---
 setx NEXT_TELEMETRY_DISABLED 1 /M  1>nul 2>nul
@@ -99,29 +98,17 @@ setx OTEL_PYTHON_DISABLED_INSTRUMENTATIONS all /M  1>nul 2>nul
 
 :: --- CLI & Package Managers ---
 setx HOMEBREW_NO_ANALYTICS 1 /M  1>nul 2>nul
-setx CHECKPOINT_DISABLE 1 /M  1>nul 2>nul
 setx SCARF_NO_ANALYTICS true /M  1>nul 2>nul
 
-:: --- Language / ML-specific ---
-setx MLDOTNET_CLI_TELEMETRY_OPTOUT 1 /M  1>nul 2>nul
+:: --- Misc ---
 setx HAMILTON_TELEMETRY_ENABLED false /M  1>nul 2>nul
 setx HF_HUB_DISABLE_TELEMETRY 1 /M  1>nul 2>nul
-
-:: --- Go telemetry mode.txt for per-user ---
-if not "%USERNAME%"=="SYSTEM" (
-    mkdir "%USERPROFILE%\AppData\Roaming\go\telemetry"  1>nul 2>nul
-    (set /p ="off"<nul)>"%USERPROFILE%\AppData\Roaming\go\telemetry\mode.txt"
-)
-
-reg load "HKU\duser" "C:\Users\Default\NTUSER.DAT"  1>nul 2>nul
-reg add "HKU\duser\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v NoGoTelem /t REG_SZ /d "cmd /c mkdir \"%%USERPROFILE%%\AppData\Roaming\go\telemetry\" 2>nul && (set /p =\"off\"<nul)>\"%%USERPROFILE%%\AppData\Roaming\go\telemetry\mode.txt\"" /f  1>nul 2>nul
-reg unload "HKU\duser" 1>nul 2>nul
 
 
 ::---Features-------------------------------------::
 
 :features
-title Installing features...
+title Installing Legacy DirectPlay...
 
 call :banner
 echo  Legacy support...
@@ -148,6 +135,8 @@ start "" /min /wait cmd /c "\"%TEMP%\dxsetup.exe\" /silent"
 ::---OpenAL---------------------------------------::
 
 :openal
+title Installing OpenAL...
+
 call :banner
 echo  OpenAL...
 start "" /min /wait cmd /c "\".\redist\oalinst.exe\" /S"
@@ -155,7 +144,7 @@ start "" /min /wait cmd /c "\".\redist\oalinst.exe\" /S"
 
 ::---VC/.Net--------------------------------------::
 
-:archvcdn
+:archvcn
 if "%IS_X64%"=="1" (
 	title Installing VC/.Net x86/x64...
 ) else (
@@ -282,5 +271,5 @@ echo.
 goto:eof
 
 :reboot
-shutdown /r /t 0  1>nul 2>nul
+shutdown /r /t 1  1>nul 2>nul
 goto:eof
