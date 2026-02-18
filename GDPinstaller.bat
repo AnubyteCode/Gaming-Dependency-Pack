@@ -2,7 +2,7 @@
 setlocal EnableExtensions DisableDelayedExpansion
 cd /d "%~dp0"
 color 0E
-title Gaming Dependency Pack v26.2.0
+title Gaming Dependency Pack v26.2.1
 
 :: Brought to you by AnubyteCode
 
@@ -215,26 +215,24 @@ if "%IS_X64%"=="1" (
 :dotnet
 call :banner
 echo  .Net 8...
-start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-8.0.22-win-x86.exe\" /quiet /norestart"
+start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-8.0.24-win-x86.exe\" /quiet /norestart"
 if "%IS_X64%"=="1" (
-	start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-8.0.22-win-x64.exe\" /quiet /norestart"
+	start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-8.0.24-win-x64.exe\" /quiet /norestart"
 )
 
 call :banner
 echo  .Net 9...
-start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-9.0.12-win-x86.exe\" /quiet /norestart"
+start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-9.0.13-win-x86.exe\" /quiet /norestart"
 if "%IS_X64%"=="1" (
-	start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-9.0.12-win-x64.exe\" /quiet /norestart"
+	start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-9.0.13-win-x64.exe\" /quiet /norestart"
 )
 
 call :banner
 echo  .Net 10...
-start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-10.0.2-win-x86.exe\" /quiet /norestart"
+start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-10.0.3-win-x86.exe\" /quiet /norestart"
 if "%IS_X64%"=="1" (
-	start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-10.0.2-win-x64.exe\" /quiet /norestart"
+	start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-10.0.3-win-x64.exe\" /quiet /norestart"
 )
-
-
 
 ::---END-OF-INSTALL--------------------------------------::
 goto :exitx
@@ -276,9 +274,9 @@ goto:eof
 :banner
 timeout /t 2 /nobreak  1>nul 2>nul
 cls
-echo ==========================
-echo The Gaming Dependency Pack
-echo ==========================
+echo  ==========================
+echo  The Gaming Dependency Pack
+echo  ==========================
 echo.
 echo.
 goto:eof
