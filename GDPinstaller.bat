@@ -2,7 +2,7 @@
 setlocal EnableExtensions DisableDelayedExpansion
 cd /d "%~dp0"
 color 0E
-title Gaming Dependency Pack v26.2.1
+title Gaming Dependency Pack v26.3.0
 
 :: Brought to you by AnubyteCode
 
@@ -96,12 +96,7 @@ setx STRAPI_TELEMETRY_DISABLED true /M  1>nul 2>nul
 setx OTEL_SDK_DISABLED true /M  1>nul 2>nul
 setx OTEL_PYTHON_DISABLED_INSTRUMENTATIONS all /M  1>nul 2>nul
 
-:: --- CLI & Package Managers ---
-setx HOMEBREW_NO_ANALYTICS 1 /M  1>nul 2>nul
-setx SCARF_NO_ANALYTICS true /M  1>nul 2>nul
-
-:: --- Misc ---
-setx HAMILTON_TELEMETRY_ENABLED false /M  1>nul 2>nul
+:: --- HuggingFace Hub API ---
 setx HF_HUB_DISABLE_TELEMETRY 1 /M  1>nul 2>nul
 
 
@@ -204,23 +199,23 @@ if "%IS_X64%"=="1" (
 :dotnet
 call :banner
 echo  .Net 8...
-start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-8.0.24-win-x86.exe\" /quiet /norestart"
+start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-8.0.25-win-x86.exe\" /quiet /norestart"
 if "%IS_X64%"=="1" (
-	start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-8.0.24-win-x64.exe\" /quiet /norestart"
+	start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-8.0.25-win-x64.exe\" /quiet /norestart"
 )
 
 call :banner
 echo  .Net 9...
-start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-9.0.13-win-x86.exe\" /quiet /norestart"
+start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-9.0.14-win-x86.exe\" /quiet /norestart"
 if "%IS_X64%"=="1" (
-	start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-9.0.13-win-x64.exe\" /quiet /norestart"
+	start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-9.0.14-win-x64.exe\" /quiet /norestart"
 )
 
 call :banner
 echo  .Net 10...
-start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-10.0.3-win-x86.exe\" /quiet /norestart"
+start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-10.0.5-win-x86.exe\" /quiet /norestart"
 if "%IS_X64%"=="1" (
-	start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-10.0.3-win-x64.exe\" /quiet /norestart"
+	start "" /min /wait cmd /c "\".\redist\windowsdesktop-runtime-10.0.5-win-x64.exe\" /quiet /norestart"
 )
 
 ::---END-OF-INSTALL--------------------------------------::
